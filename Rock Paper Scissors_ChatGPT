@@ -1,0 +1,580 @@
+import turtle
+import random
+import asyncio
+from openai import OpenAI
+
+# Setup OpenAI
+client = OpenAI(api_key="sk-proj-aybvUgE7uPwueZa1HsDkT3BlbkFJ4Dnr5u3bqLdC7BrAU3ai")
+
+# Setup screen
+def setup_turtle():
+    screen = turtle.Screen()
+    screen.title("Rock, Paper, Scissors")
+    screen.bgcolor("white")
+
+    t = turtle.Turtle()
+    t.speed(10)
+    return t
+
+def draw_choice(drawer, choice, position):
+    drawer.penup()
+    drawer.goto(position)
+    drawer.pendown()
+
+    if choice == 'rock':
+        drawer.pencolor("#b3b2b0")
+        drawer.fillcolor("#b3b2b0")
+        drawer.pensize(1)
+        drawer.setheading(0)
+        drawer.pendown()
+        drawer.begin_fill()
+        drawer.circle(50)
+        drawer.end_fill()
+        drawer.setheading(0)
+        drawer.forward(15)
+        drawer.setheading(0)
+        drawer.begin_fill()
+        drawer.circle(20)
+        drawer.end_fill()
+        drawer.setheading(90)
+        drawer.forward(30)
+        drawer.setheading(0)
+        drawer.forward(20)
+        drawer.begin_fill()
+        drawer.circle(20)
+        drawer.end_fill()
+        drawer.setheading(90)
+        drawer.forward(50)
+        drawer.setheading(180)
+        drawer.forward(10)
+        drawer.pencolor("black")
+        drawer.fillcolor("white")
+        drawer.begin_fill()
+        drawer.circle(8)
+        drawer.end_fill()
+        drawer.penup()
+        drawer.setheading(180)
+        drawer.forward(5)
+        drawer.setheading(270)
+        drawer.forward(5)
+        drawer.pendown()
+        drawer.fillcolor("black")
+        drawer.begin_fill()
+        drawer.circle(3)
+        drawer.end_fill()
+        drawer.penup()
+
+        drawer.setheading(90)
+        drawer.forward(5)
+        drawer.setheading(180)
+        drawer.forward(35)
+        drawer.pendown()
+        drawer.pencolor("black")
+        drawer.fillcolor("white")
+        drawer.begin_fill()
+        drawer.circle(8)
+        drawer.end_fill()
+        drawer.penup()
+        drawer.setheading(180)
+        drawer.forward(5)
+        drawer.setheading(270)
+        drawer.forward(5)
+        drawer.fillcolor("black")
+        drawer.begin_fill()
+        drawer.circle(3)
+        drawer.end_fill()
+
+        drawer.setheading(90)
+        drawer.penup()
+        drawer.forward(8)
+        drawer.setheading(0)
+        drawer.pendown()
+        drawer.forward(10)
+
+        drawer.setheading(0)
+        drawer.penup()
+        drawer.forward(30)
+        drawer.setheading(0)
+        drawer.pendown()
+        drawer.forward(10)
+
+        drawer.penup()
+        drawer.setheading(270)
+        drawer.forward(40)
+        drawer.setheading(180)
+        drawer.forward(10)
+        drawer.fillcolor("pink")
+        drawer.begin_fill()
+        drawer.circle(5)
+        drawer.end_fill()
+
+        drawer.setheading(180)
+        drawer.forward(35)
+        drawer.fillcolor("pink")
+        drawer.begin_fill()
+        drawer.circle(5)
+        drawer.end_fill()
+
+        drawer.setheading(270)
+        drawer.forward(15)
+        drawer.pendown()
+        drawer.pencolor("black")
+        drawer.pensize(3)
+        drawer.forward(10)
+        drawer.backward(5)
+        drawer.setheading(0)
+        drawer.forward(35)
+        drawer.setheading(270)
+        drawer.forward(5)
+        drawer.backward(10)
+
+
+    elif choice == 'paper':
+        drawer.setheading(0)
+        drawer.pensize(1)
+        drawer.pencolor("#e1c96e")  # RGB (225, 193, 110) in Hex
+        drawer.fillcolor("#e1c96e")  # RGB (225, 193, 110) in Hex
+        drawer.begin_fill()
+        drawer.circle(30)
+        drawer.end_fill()
+        drawer.penup()
+        drawer.setheading(180)
+        drawer.forward(15)
+        drawer.setheading(90)
+        drawer.forward(15)
+        drawer.setheading(180)
+        drawer.forward(15)
+        drawer.pendown()
+        drawer.begin_fill()
+        drawer.setheading(0)
+        drawer.circle(25)
+        drawer.end_fill()
+        drawer.penup()
+        drawer.setheading(180)
+        drawer.forward(11)
+        drawer.setheading(90)
+        drawer.forward(30)
+        drawer.setheading(180)
+        drawer.forward(11)
+        drawer.pendown()
+        drawer.begin_fill()
+        drawer.setheading(0)
+        drawer.circle(17)
+        drawer.end_fill()
+        drawer.penup()
+        drawer.setheading(180)
+        drawer.forward(6)
+        drawer.setheading(90)
+        drawer.forward(25)
+        drawer.setheading(180)
+        drawer.forward(4)
+        drawer.pendown()
+        drawer.begin_fill()
+        drawer.setheading(0)
+        drawer.circle(10)
+        drawer.end_fill()
+        drawer.penup()
+        drawer.setheading(90)
+        drawer.forward(10)
+        drawer.pendown()
+        drawer.pencolor("black")
+        drawer.pensize(1.5)
+        drawer.forward(9)
+        drawer.backward(9)
+        drawer.setheading(180)
+        drawer.penup()
+        drawer.forward(6)
+        drawer.setheading(90)
+        drawer.pendown()
+        drawer.forward(6)
+        drawer.backward(6)
+        drawer.penup()
+        drawer.setheading(0)
+        drawer.forward(12)
+        drawer.setheading(90)
+        drawer.pendown()
+        drawer.forward(6)
+
+        drawer.penup()
+        drawer.setheading(270)
+        drawer.forward(89)
+        drawer.setheading(0)
+        drawer.forward(198)
+
+        drawer.pendown()
+        drawer.pencolor("#e1c96e")  # RGB (225, 193, 110) in Hex
+        drawer.fillcolor("#e1c96e")  # RGB (225, 193, 110) in Hex
+        drawer.begin_fill()
+        drawer.circle(30)
+        drawer.end_fill()
+        drawer.penup()
+        drawer.setheading(0)
+        drawer.forward(15)
+        drawer.setheading(90)
+        drawer.forward(15)
+        drawer.setheading(0)
+        drawer.forward(15)
+        drawer.pendown()
+        drawer.begin_fill()
+        drawer.circle(25)
+        drawer.end_fill()
+        drawer.penup()
+        drawer.setheading(0)
+        drawer.forward(11)
+        drawer.setheading(90)
+        drawer.forward(30)
+        drawer.setheading(0)
+        drawer.forward(11)
+        drawer.pendown()
+        drawer.begin_fill()
+        drawer.circle(17)
+        drawer.end_fill()
+        drawer.penup()
+        drawer.setheading(0)
+        drawer.forward(6)
+        drawer.setheading(90)
+        drawer.forward(25)
+        drawer.setheading(0)
+        drawer.forward(4)
+        drawer.pendown()
+        drawer.begin_fill()
+        drawer.circle(10)
+        drawer.end_fill()
+        drawer.penup()
+        drawer.setheading(90)
+        drawer.forward(10)
+        drawer.pendown()
+        drawer.pencolor("black")
+        drawer.pensize(1.5)
+        drawer.forward(9)
+        drawer.backward(9)
+        drawer.setheading(0)
+        drawer.penup()
+        drawer.forward(6)
+        drawer.setheading(90)
+        drawer.pendown()
+        drawer.forward(6)
+        drawer.backward(6)
+        drawer.penup()
+        drawer.setheading(180)
+        drawer.forward(12)
+        drawer.setheading(90)
+        drawer.pendown()
+        drawer.forward(6)
+
+        drawer.penup()
+        drawer.setheading(180)
+        drawer.forward(67)
+        drawer.setheading(270)
+        drawer.forward(160)
+        drawer.setheading(180)
+        drawer.forward(125)
+        drawer.setheading(0)
+
+        drawer.pendown()
+        drawer.pencolor("black")
+        drawer.fillcolor("white")
+        drawer.begin_fill()
+        drawer.forward(125)
+        drawer.setheading(90)
+        drawer.forward(180)
+        drawer.setheading(135)
+        drawer.forward(20)
+        drawer.setheading(270)
+        drawer.forward(14.142)
+        drawer.setheading(0)
+        drawer.forward(14.142)
+        drawer.backward(14.142)
+        drawer.setheading(90)
+        drawer.forward(14.142)
+        drawer.setheading(180)
+        drawer.forward(110.858)
+        drawer.setheading(270)
+        drawer.forward(194.142)
+        drawer.end_fill()
+        drawer.backward(180)
+        drawer.penup()
+        drawer.setheading(0)
+        drawer.forward(10)
+        drawer.pendown()
+        for i in range(5):
+            drawer.setheading(300)
+            drawer.forward(20)
+            drawer.setheading(60)
+            drawer.forward(20)
+            drawer.setheading(300)
+        drawer.penup()
+        drawer.setheading(270)
+        drawer.forward(30)
+        for i in range(5):
+            drawer.pendown()
+            drawer.setheading(240)
+            drawer.forward(20)
+            drawer.setheading(120)
+            drawer.forward(20)
+            drawer.setheading(240)
+        drawer.penup()
+        drawer.setheading(270)
+        drawer.forward(30)
+        for i in range(5):
+            drawer.pendown()
+            drawer.setheading(300)
+            drawer.forward(20)
+            drawer.setheading(60)
+            drawer.forward(20)
+            drawer.setheading(300)
+        drawer.penup()
+        drawer.setheading(270)
+        drawer.forward(30)
+        for i in range(5):
+            drawer.pendown()
+            drawer.setheading(240)
+            drawer.forward(20)
+            drawer.setheading(120)
+            drawer.forward(20)
+            drawer.setheading(240)
+        drawer.penup()
+        drawer.setheading(270)
+        drawer.forward(30)
+        for i in range(5):
+            drawer.pendown()
+            drawer.setheading(300)
+            drawer.forward(20)
+            drawer.setheading(60)
+            drawer.forward(20)
+            drawer.setheading(300)
+        drawer.penup()
+        drawer.setheading(270)
+        drawer.forward(30)
+        for i in range(5):
+            drawer.pendown()
+            drawer.setheading(240)
+            drawer.forward(20)
+            drawer.setheading(120)
+            drawer.forward(20)
+            drawer.setheading(240)
+
+
+    elif choice == 'scissors':
+        drawer.pensize(1)
+        drawer.pencolor("#a9a9a9")
+        drawer.fillcolor("#d3d3d3")
+        drawer.begin_fill()
+        drawer.setheading(45)
+        drawer.forward(250)
+        drawer.setheading(180)
+        drawer.forward(15)
+        drawer.setheading(220)
+        drawer.forward(230)
+        drawer.setheading(290)
+        drawer.forward(35)
+        drawer.end_fill()
+        drawer.penup()
+        drawer.setheading(45)
+        drawer.forward(120)
+        for i in range(8):
+            drawer.pendown()
+            drawer.pencolor("black")
+            drawer.setheading(340)
+            drawer.forward(18)
+            drawer.setheading(110)
+            drawer.forward(18)
+        drawer.setheading(225)
+        drawer.penup()
+        drawer.forward(240)
+
+        drawer.penup()
+        drawer.setheading(180)
+        drawer.forward(10)
+        drawer.setheading(90)
+        drawer.forward(145)
+
+        drawer.pendown()
+        drawer.pencolor("#a9a9a9")
+        drawer.fillcolor("#d3d3d3")
+        drawer.begin_fill()
+        drawer.setheading(315)
+        drawer.forward(250)
+        drawer.setheading(270)
+        drawer.forward(15)
+        drawer.setheading(140)
+        drawer.forward(230)
+        drawer.setheading(90)
+        drawer.forward(35)
+        drawer.end_fill()
+
+        drawer.backward(5)
+        drawer.penup()
+        drawer.setheading(320)
+        drawer.forward(110)
+        for i in range(8):
+            drawer.pendown()
+            drawer.pencolor("black")
+            drawer.setheading(20)
+            drawer.forward(18)
+            drawer.setheading(250)
+            drawer.forward(18)
+        drawer.setheading(225)
+        drawer.penup()
+
+        drawer.setheading(153)
+        drawer.forward(225)
+        drawer.setheading(0)
+
+        drawer.pencolor("black")
+        drawer.fillcolor("#4169e1")
+        drawer.pendown()
+        drawer.begin_fill()
+        drawer.circle(50)
+        drawer.end_fill()
+        drawer.setheading(90)
+        drawer.penup()
+        drawer.forward(15)
+        drawer.setheading(0)
+        drawer.pendown()
+        drawer.pencolor("black")
+        drawer.fillcolor("white")
+        drawer.begin_fill()
+        drawer.circle(35)
+        drawer.end_fill()
+
+        drawer.penup()
+        drawer.setheading(270)
+        drawer.forward(130)
+        drawer.setheading(0)
+
+        drawer.pendown()
+        drawer.pencolor("black")
+        drawer.fillcolor("#4169e1")
+        drawer.begin_fill()
+        drawer.circle(50)
+        drawer.end_fill()
+        drawer.setheading(90)
+        drawer.penup()
+        drawer.forward(15)
+        drawer.setheading(0)
+        drawer.pendown()
+        drawer.pencolor("black")
+        drawer.fillcolor("white")
+        drawer.begin_fill()
+        drawer.circle(35)
+        drawer.end_fill()
+
+        drawer.penup()
+        drawer.setheading(0)
+        drawer.forward(93)
+        drawer.setheading(90)
+        drawer.forward(97)
+
+        drawer.pendown()
+        drawer.pencolor("#a9a9a9")
+        drawer.fillcolor("#5a5a5a")
+        drawer.begin_fill()
+        drawer.circle(7)
+        drawer.end_fill()
+        drawer.hideturtle()
+
+# Function to get a fact from OpenAI
+def get_fact():
+    messages = [
+        {"role": "system", "content": "Provide a fact about rock-paper-scissors."},
+        {"role": "user", "content": "Give a fact!"}
+    ]
+    
+    response = client.chat.completions.create(
+        model="gpt-4o", 
+        messages=messages
+    )
+    
+    fact = response.choices[0].message.content
+    return fact.strip()
+
+# Function to display fact
+def display_fact(drawer, fact):
+    drawer.penup()
+    drawer.goto(-100, -180)
+    drawer.pendown()
+    drawer.pencolor("black")
+    drawer.hideturtle()
+
+    # Display the fact text with wrapping
+    max_line_length = 40
+    words = fact.split()
+    lines = []
+    current_line = ""
+
+    for word in words:
+        if len(current_line) + len(word) + 1 > max_line_length:
+            lines.append(current_line)
+            current_line = word
+        else:
+            if current_line:
+                current_line += " "
+            current_line += word
+    
+    if current_line:
+        lines.append(current_line)
+    
+    y_offset = -150
+    drawer.penup()
+    for line in lines:
+        drawer.goto(-100, y_offset)
+        drawer.pendown()
+        drawer.write(line, align="left", font=("Arial", 16, "normal"))
+        y_offset -= 25
+        drawer.penup()
+
+# Ask user
+def get_user_choice():
+    choice = turtle.textinput("Rock Paper and Scissors", "Rock, Paper, Scissors... Shoot! ").lower()
+    while choice not in ['rock', 'paper', 'scissors']:
+        print("Stop trying to impress me. Choose rock, paper, or scissors!!!")
+        choice = input("Rock, Paper, Scissors... Shoot! ").lower()
+    return choice
+
+# Ask computer
+def get_computer_choice():
+    return random.choice(['rock', 'paper', 'scissors'])
+
+# Determine winner
+def determine_winner(user_choice, computer_choice):
+    if user_choice == computer_choice:
+        return "It's a tie!!! Good game."
+
+    if (user_choice == 'rock' and computer_choice == 'scissors') or \
+       (user_choice == 'scissors' and computer_choice == 'paper') or \
+       (user_choice == 'paper' and computer_choice == 'rock'):
+        return "YOU WIN!!! WOOOHOOO!!!"
+
+    return "Sorry... you lose... Good game!"
+
+# Game logic
+def play_game():
+    drawer = setup_turtle()
+    user_choice = get_user_choice()
+    computer_choice = get_computer_choice()
+
+    print(f"You chose: {user_choice}")
+    print(f"The computer chose: {computer_choice}")
+
+    drawer.clear()
+
+    draw_choice(drawer, user_choice, (-180, 100))
+    draw_choice(drawer, computer_choice, (120, 100))
+
+    result = determine_winner(user_choice, computer_choice)
+    print(result)
+
+    drawer.penup()
+    drawer.pencolor("navy")
+    drawer.goto(-50, 10)
+    drawer.pendown()
+    drawer.write(result, align="center", font=("Arial", 24, "normal"))
+
+    # Fetch and display the fact
+    fact = get_fact()
+    display_fact(drawer, fact)
+
+    turtle.done()
+# Run the game
+play_game()
