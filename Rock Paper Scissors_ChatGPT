@@ -1,495 +1,521 @@
+# import libraries
 import turtle
 import random
 import asyncio
 from openai import OpenAI
 
-# Setup OpenAI
+# setup OpenAI
 client = OpenAI(api_key="sk-proj-aybvUgE7uPwueZa1HsDkT3BlbkFJ4Dnr5u3bqLdC7BrAU3ai")
 
-# Setup screen
+# setup screen
 def setup_turtle():
     screen = turtle.Screen()
     screen.title("Rock, Paper, Scissors")
     screen.bgcolor("white")
 
-    t = turtle.Turtle()
-    t.speed(10)
+    t = turtle.Turtle() # setup turtle
+    t.hideturtle()
+    t.speed(0)
     return t
 
-def draw_choice(drawer, choice, position):
-    drawer.penup()
-    drawer.goto(position)
-    drawer.pendown()
+# function to draw rock, paper, or scissors
+def draw_choice(t, choice, position):
+    t.penup()
+    t.goto(position)
+    t.pendown()
+
+    if choice == 'scissors':
+    # scissor drawing
+        # scissor 1
+        t.pensize(1)
+        t.pencolor("#a9a9a9")  # light gray pen color
+        t.fillcolor("#d3d3d3")  # light gray fill color
+        t.begin_fill()  # begins scissor
+        t.setheading(45)
+        t.forward(250)
+        t.setheading(180)
+        t.forward(15)
+        t.setheading(220)
+        t.forward(230)
+        t.setheading(290)
+        t.forward(35)
+        t.end_fill()  # ends scissor
+        t.penup()
+        t.setheading(45)
+        t.forward(120)  # moved to teeth location
+        for i in range(8):  # scissor 1 teeth
+            t.pendown()
+            t.pencolor("black")
+            t.setheading(340)
+            t.forward(18)
+            t.setheading(110)
+            t.forward(18)  # ends scissor 1 teeth
+
+        # move to Scissor 2
+        t.setheading(225)
+        t.penup()
+        t.forward(240)
+        t.setheading(180)
+        t.forward(10)
+        t.setheading(90)
+        t.forward(145)  # moved towards second scissor
+
+        # scissor 2
+        t.pendown()
+        t.pencolor("#a9a9a9")  # light gray pen color
+        t.fillcolor("#d3d3d3")  # light gray fill color
+        t.begin_fill()  # begins scissor 2
+        t.setheading(315)
+        t.forward(250)
+        t.setheading(270)
+        t.forward(15)
+        t.setheading(140)
+        t.forward(230)
+        t.setheading(90)
+        t.forward(35)
+        t.end_fill()  # ends scissor 2
+        t.backward(5)
+        t.penup()
+        t.setheading(320)
+        t.forward(110)  # moved to teeth location
+        for i in range(8):  # scissor 2 teeth
+            t.pendown()
+            t.pencolor("black")
+            t.setheading(20)
+            t.forward(18)
+            t.setheading(250)
+            t.forward(18)  # ends scissor 2 teeth
+
+        # handle 1
+        t.setheading(225)
+        t.penup()
+        t.setheading(153)
+        t.forward(225)
+        t.setheading(0)  # moved to handle 1 location
+        t.pencolor("black")  # black pen color
+        t.fillcolor("#4169e1")  # blue fill color
+        t.pendown()
+        t.begin_fill()  # begins outer handle circle
+        t.circle(50)
+        t.end_fill()  # ends outer handle circle
+        t.setheading(90)
+        t.penup()
+        t.forward(15)
+        t.setheading(0)  # moved to inner circle location
+        t.pendown()
+        t.pencolor("black")  # black pen color
+        t.fillcolor("white")  # white fill color
+        t.begin_fill()  # begins inner handle circle
+        t.circle(35)
+        t.end_fill()  # ends inner handle circle
+
+        # handle 2
+        t.penup()
+        t.setheading(270)
+        t.forward(130)
+        t.setheading(0)  # moved to handle 2 location
+        t.pendown()
+        t.pencolor("black")  # black pen color
+        t.fillcolor("#4169e1")  # blue fill color
+        t.begin_fill()  # begins outer handle circle
+        t.circle(50)
+        t.end_fill()  # ends outer handle circle
+        t.setheading(90)
+        t.penup()
+        t.forward(15)
+        t.setheading(0)  # moved to inner circle location
+        t.pendown()
+        t.pencolor("black")  # black pen color
+        t.fillcolor("white")  # white fill color
+        t.begin_fill()  # begins inner handle circle
+        t.circle(35)
+        t.end_fill()  # ends inner handle circle
+
+        # screw
+        t.penup()
+        t.setheading(0)
+        t.forward(93)
+        t.setheading(90)
+        t.forward(97)  # moved to screw location
+        t.pendown()
+        t.pencolor("#a9a9a9")  # dark gray pen color
+        t.fillcolor("#5a5a5a")  # gray pen color
+        t.begin_fill()  # begins screw
+        t.circle(7)
+        t.end_fill()  # ends screw
+        t.hideturtle()  # hides turtle
+
 
     if choice == 'rock':
-        drawer.pencolor("#b3b2b0")
-        drawer.fillcolor("#b3b2b0")
-        drawer.pensize(1)
-        drawer.setheading(0)
-        drawer.pendown()
-        drawer.begin_fill()
-        drawer.circle(50)
-        drawer.end_fill()
-        drawer.setheading(0)
-        drawer.forward(15)
-        drawer.setheading(0)
-        drawer.begin_fill()
-        drawer.circle(20)
-        drawer.end_fill()
-        drawer.setheading(90)
-        drawer.forward(30)
-        drawer.setheading(0)
-        drawer.forward(20)
-        drawer.begin_fill()
-        drawer.circle(20)
-        drawer.end_fill()
-        drawer.setheading(90)
-        drawer.forward(50)
-        drawer.setheading(180)
-        drawer.forward(10)
-        drawer.pencolor("black")
-        drawer.fillcolor("white")
-        drawer.begin_fill()
-        drawer.circle(8)
-        drawer.end_fill()
-        drawer.penup()
-        drawer.setheading(180)
-        drawer.forward(5)
-        drawer.setheading(270)
-        drawer.forward(5)
-        drawer.pendown()
-        drawer.fillcolor("black")
-        drawer.begin_fill()
-        drawer.circle(3)
-        drawer.end_fill()
-        drawer.penup()
+    # rock drawing
+        # main rock body
+        t.pencolor("#b3b2b0")  # gray pen color
+        t.fillcolor("#b3b2b0")  # gray fill color
+        t.pensize(1)
+        t.setheading(0)
+        t.pendown()
+        t.begin_fill()
+        t.circle(50)
+        t.end_fill()
 
-        drawer.setheading(90)
-        drawer.forward(5)
-        drawer.setheading(180)
-        drawer.forward(35)
-        drawer.pendown()
-        drawer.pencolor("black")
-        drawer.fillcolor("white")
-        drawer.begin_fill()
-        drawer.circle(8)
-        drawer.end_fill()
-        drawer.penup()
-        drawer.setheading(180)
-        drawer.forward(5)
-        drawer.setheading(270)
-        drawer.forward(5)
-        drawer.fillcolor("black")
-        drawer.begin_fill()
-        drawer.circle(3)
-        drawer.end_fill()
+        # bottom lump
+        t.setheading(0)
+        t.forward(15)
+        t.setheading(0)  # moved to bottom of rock
+        t.begin_fill()  # begins lump
+        t.circle(20)
+        t.end_fill()  # ends lump
 
-        drawer.setheading(90)
-        drawer.penup()
-        drawer.forward(8)
-        drawer.setheading(0)
-        drawer.pendown()
-        drawer.forward(10)
+        # right lump
+        t.setheading(90)
+        t.forward(30)
+        t.setheading(0)
+        t.forward(20)  # moved to right of rock
+        t.begin_fill()  # begins lump
+        t.circle(20)
+        t.end_fill()  # ends lump
 
-        drawer.setheading(0)
-        drawer.penup()
-        drawer.forward(30)
-        drawer.setheading(0)
-        drawer.pendown()
-        drawer.forward(10)
+        # right eye
+        t.penup()
+        t.setheading(90)
+        t.forward(50)
+        t.setheading(180)
+        t.forward(10)  # moved to right eye location
+        t.pendown()  # eye white
+        t.pencolor("black")
+        t.fillcolor("white")
+        t.begin_fill()
+        t.circle(8)
+        t.end_fill()
+        t.penup()  # finished eye white
+        t.setheading(180)
+        t.forward(5)
+        t.setheading(270)
+        t.forward(5)  # moved to right pupil location
+        t.pendown()  # eye pupil
+        t.fillcolor("black")
+        t.begin_fill()
+        t.circle(3)
+        t.end_fill()  # finished eye pupil
 
-        drawer.penup()
-        drawer.setheading(270)
-        drawer.forward(40)
-        drawer.setheading(180)
-        drawer.forward(10)
-        drawer.fillcolor("pink")
-        drawer.begin_fill()
-        drawer.circle(5)
-        drawer.end_fill()
+        # left eye
+        t.penup()
+        t.setheading(90)
+        t.forward(5)
+        t.setheading(180)
+        t.forward(35)  # moved to left eye location
+        t.pendown()  # eye white
+        t.pencolor("black")
+        t.fillcolor("white")
+        t.begin_fill()
+        t.circle(8)
+        t.end_fill()  # finished eye white
+        t.penup()
+        t.setheading(180)
+        t.forward(5)
+        t.setheading(270)
+        t.forward(5)  # moved to left pupil location
+        t.pendown()  # eye pupil
+        t.fillcolor("black")
+        t.begin_fill()
+        t.circle(3)
+        t.end_fill()  # finished eye pupil
 
-        drawer.setheading(180)
-        drawer.forward(35)
-        drawer.fillcolor("pink")
-        drawer.begin_fill()
-        drawer.circle(5)
-        drawer.end_fill()
+        # eyebrows
+        t.penup()
+        t.setheading(90)
+        t.forward(8)
+        t.setheading(0)  # moved to left eyebrow location
+        t.pendown()
+        t.forward(10)  # left eyebrow
+        t.setheading(0)
+        t.penup()
+        t.forward(30)
+        t.setheading(0)  # moved to right eyebrow location
+        t.pendown()
+        t.forward(10)  # right eyebrow
 
-        drawer.setheading(270)
-        drawer.forward(15)
-        drawer.pendown()
-        drawer.pencolor("black")
-        drawer.pensize(3)
-        drawer.forward(10)
-        drawer.backward(5)
-        drawer.setheading(0)
-        drawer.forward(35)
-        drawer.setheading(270)
-        drawer.forward(5)
-        drawer.backward(10)
+        # cheeks
+        t.penup()
+        t.setheading(270)
+        t.forward(40)
+        t.setheading(180)
+        t.forward(10)  # moved to right cheek location
+        t.fillcolor("pink")
+        t.begin_fill()  # right cheek
+        t.circle(5)
+        t.end_fill()  # finished right cheek
+        t.setheading(180)
+        t.forward(35)  # moved to left cheek location
+        t.fillcolor("pink")
+        t.begin_fill()  # left cheek
+        t.circle(5)
+        t.end_fill()  # finished left cheek
+
+        # Mouth
+        t.setheading(270)  # moved to left dimple location
+        t.forward(15)
+        t.pendown()  # preparation
+        t.pencolor("black")
+        t.pensize(3)
+        t.forward(10)  # left dimple
+        t.backward(5)
+        t.setheading(0)  # main mouth
+        t.forward(35)
+        t.setheading(270)
+        t.forward(5)  # right dimple
+        t.backward(10)
+
+        # crown
+        t.penup()
+        t.setheading(90)
+        t.forward(60)
+        t.setheading(0)
+        t.forward(15)
+        t.setheading(90)  # moved to crown location
+        t.pendown()  # crown drawing
+        t.pencolor("#d9ad34")  # gold pen color
+        t.fillcolor("#d9ad34")  # gold fill color
+        t.begin_fill()
+        t.forward(30)
+        for i in range(3):  # spiky top
+            t.setheading(225)
+            t.forward(15)
+            t.setheading(135)
+            t.forward(15)
+        t.setheading(270)
+        t.forward(30)
+        t.setheading(0)
+        t.forward(64)
+        t.end_fill()  # finished crown drawing
+
+        # jewels
+        t.penup()
+        t.setheading(90)
+        t.forward(40)
+        t.setheading(180)  # moved to top of crown
+        for i in range(4):  # draws 4 jewels
+            t.fillcolor("#cf4ee6")  # pink pen color
+            t.begin_fill()
+            t.circle(5)
+            t.end_fill()
+            t.setheading(180)
+            t.forward(22)  # finished jewels
+        t.hideturtle()
 
 
     elif choice == 'paper':
-        drawer.setheading(0)
-        drawer.pensize(1)
-        drawer.pencolor("#e1c96e")  # RGB (225, 193, 110) in Hex
-        drawer.fillcolor("#e1c96e")  # RGB (225, 193, 110) in Hex
-        drawer.begin_fill()
-        drawer.circle(30)
-        drawer.end_fill()
-        drawer.penup()
-        drawer.setheading(180)
-        drawer.forward(15)
-        drawer.setheading(90)
-        drawer.forward(15)
-        drawer.setheading(180)
-        drawer.forward(15)
-        drawer.pendown()
-        drawer.begin_fill()
-        drawer.setheading(0)
-        drawer.circle(25)
-        drawer.end_fill()
-        drawer.penup()
-        drawer.setheading(180)
-        drawer.forward(11)
-        drawer.setheading(90)
-        drawer.forward(30)
-        drawer.setheading(180)
-        drawer.forward(11)
-        drawer.pendown()
-        drawer.begin_fill()
-        drawer.setheading(0)
-        drawer.circle(17)
-        drawer.end_fill()
-        drawer.penup()
-        drawer.setheading(180)
-        drawer.forward(6)
-        drawer.setheading(90)
-        drawer.forward(25)
-        drawer.setheading(180)
-        drawer.forward(4)
-        drawer.pendown()
-        drawer.begin_fill()
-        drawer.setheading(0)
-        drawer.circle(10)
-        drawer.end_fill()
-        drawer.penup()
-        drawer.setheading(90)
-        drawer.forward(10)
-        drawer.pendown()
-        drawer.pencolor("black")
-        drawer.pensize(1.5)
-        drawer.forward(9)
-        drawer.backward(9)
-        drawer.setheading(180)
-        drawer.penup()
-        drawer.forward(6)
-        drawer.setheading(90)
-        drawer.pendown()
-        drawer.forward(6)
-        drawer.backward(6)
-        drawer.penup()
-        drawer.setheading(0)
-        drawer.forward(12)
-        drawer.setheading(90)
-        drawer.pendown()
-        drawer.forward(6)
+    # paper drawing
+        # left muscle
+        t.setheading(0)
+        t.pensize(1)
+        t.pencolor("#e1c96e")  # pale tone pen color
+        t.fillcolor("#e1c96e")  # pale tone fill color
+        t.begin_fill()  # begins shoulder muscle
+        t.circle(30)
+        t.end_fill()  # ends shoulder
+        t.penup()
+        t.setheading(180)
+        t.forward(15)
+        t.setheading(90)
+        t.forward(15)
+        t.setheading(180)
+        t.forward(15)  # moved to medium muscle location
+        t.pendown()
+        t.begin_fill()  # begins medium muscle
+        t.setheading(0)
+        t.circle(25)
+        t.end_fill()  # ends medium muscle
+        t.penup()
+        t.setheading(180)
+        t.forward(11)
+        t.setheading(90)
+        t.forward(30)
+        t.setheading(180)
+        t.forward(11)  # moved to small muscle location
+        t.pendown()
+        t.begin_fill()  # begins small muscle
+        t.setheading(0)
+        t.circle(17)
+        t.end_fill()  # ends small muscle
+        t.penup()
+        t.setheading(180)
+        t.forward(6)
+        t.setheading(90)
+        t.forward(25)
+        t.setheading(180)
+        t.forward(4)  # moved to hand location
+        t.pendown()
+        t.begin_fill()  # begins hand
+        t.setheading(0)
+        t.circle(10)
+        t.end_fill()  # ends hand
+        t.penup()
+        t.setheading(90)
+        t.forward(10)  # moved to finger marks location
+        t.pendown()
+        t.pencolor("black")  # black pen color
+        t.pensize(1.5)
+        t.forward(9)  # draws middle finger mark
+        t.backward(9)
+        t.setheading(180)
+        t.penup()
+        t.forward(6)  # moved to left finger location
+        t.setheading(90)
+        t.pendown()
+        t.forward(6)  # draws left finger mark
+        t.backward(6)
+        t.penup()
+        t.setheading(0)
+        t.forward(12)
+        t.setheading(90)  # moved to right finger location
+        t.pendown()
+        t.forward(6)  # draws right finger mark
 
-        drawer.penup()
-        drawer.setheading(270)
-        drawer.forward(89)
-        drawer.setheading(0)
-        drawer.forward(198)
+        # right muscle
+        t.penup()
+        t.setheading(270)
+        t.forward(89)
+        t.setheading(0)
+        t.forward(198)  # moved to shoulder muscle location
+        t.pendown()
+        t.pencolor("#e1c96e")  # pale tone pen color
+        t.fillcolor("#e1c96e")  # pale tone fill color
+        t.begin_fill()  # begins shoulder muscle
+        t.circle(30)
+        t.end_fill()  # ends shoulder muscle
+        t.penup()
+        t.setheading(0)
+        t.forward(15)
+        t.setheading(90)
+        t.forward(15)
+        t.setheading(0)
+        t.forward(15)  # moved to medium muscle location
+        t.pendown()
+        t.begin_fill()  # begins medium muscle
+        t.circle(25)
+        t.end_fill()  # ends medium muscle
+        t.penup()
+        t.setheading(0)
+        t.forward(11)
+        t.setheading(90)
+        t.forward(30)
+        t.setheading(0)
+        t.forward(11)  # moved to small muscle location
+        t.pendown()
+        t.begin_fill()  # begins small muscle
+        t.circle(17)
+        t.end_fill()  # ends small muscle
+        t.penup()
+        t.setheading(0)
+        t.forward(6)
+        t.setheading(90)
+        t.forward(25)
+        t.setheading(0)
+        t.forward(4)  # moved to hand location
+        t.pendown()
+        t.begin_fill()  # begins hand
+        t.circle(10)
+        t.end_fill()  # ends hand
+        t.penup()
+        t.setheading(90)
+        t.forward(10)  # moved to finger marks location
+        t.pendown()
+        t.pencolor("black")  # black pen color
+        t.pensize(1.5)
+        t.forward(9)  # draws middle finger mark
+        t.backward(9)
+        t.setheading(0)
+        t.penup()
+        t.forward(6)  # moved to right finger location
+        t.setheading(90)
+        t.pendown()
+        t.forward(6)  # draws right finger mark
+        t.backward(6)
+        t.penup()
+        t.setheading(180)
+        t.forward(12)  # moved to left finger location
+        t.setheading(90)
+        t.pendown()
+        t.forward(6)  # draws left finger mark
 
-        drawer.pendown()
-        drawer.pencolor("#e1c96e")  # RGB (225, 193, 110) in Hex
-        drawer.fillcolor("#e1c96e")  # RGB (225, 193, 110) in Hex
-        drawer.begin_fill()
-        drawer.circle(30)
-        drawer.end_fill()
-        drawer.penup()
-        drawer.setheading(0)
-        drawer.forward(15)
-        drawer.setheading(90)
-        drawer.forward(15)
-        drawer.setheading(0)
-        drawer.forward(15)
-        drawer.pendown()
-        drawer.begin_fill()
-        drawer.circle(25)
-        drawer.end_fill()
-        drawer.penup()
-        drawer.setheading(0)
-        drawer.forward(11)
-        drawer.setheading(90)
-        drawer.forward(30)
-        drawer.setheading(0)
-        drawer.forward(11)
-        drawer.pendown()
-        drawer.begin_fill()
-        drawer.circle(17)
-        drawer.end_fill()
-        drawer.penup()
-        drawer.setheading(0)
-        drawer.forward(6)
-        drawer.setheading(90)
-        drawer.forward(25)
-        drawer.setheading(0)
-        drawer.forward(4)
-        drawer.pendown()
-        drawer.begin_fill()
-        drawer.circle(10)
-        drawer.end_fill()
-        drawer.penup()
-        drawer.setheading(90)
-        drawer.forward(10)
-        drawer.pendown()
-        drawer.pencolor("black")
-        drawer.pensize(1.5)
-        drawer.forward(9)
-        drawer.backward(9)
-        drawer.setheading(0)
-        drawer.penup()
-        drawer.forward(6)
-        drawer.setheading(90)
-        drawer.pendown()
-        drawer.forward(6)
-        drawer.backward(6)
-        drawer.penup()
-        drawer.setheading(180)
-        drawer.forward(12)
-        drawer.setheading(90)
-        drawer.pendown()
-        drawer.forward(6)
+        # paper
+        t.penup()
+        t.setheading(180)
+        t.forward(67)
+        t.setheading(270)
+        t.forward(160)
+        t.setheading(180)
+        t.forward(125)
+        t.setheading(0)  # moved to bottom-left of paper
 
-        drawer.penup()
-        drawer.setheading(180)
-        drawer.forward(67)
-        drawer.setheading(270)
-        drawer.forward(160)
-        drawer.setheading(180)
-        drawer.forward(125)
-        drawer.setheading(0)
+        t.pendown()
+        t.pencolor("black")  # black pen color
+        t.fillcolor("white")  # white pen color
+        t.begin_fill()  # begins paper
+        t.forward(125)
+        t.setheading(90)
+        t.forward(180)
+        t.setheading(135)
+        t.forward(20)
+        t.setheading(270)
+        t.forward(14.142)  # draws paper fold
+        t.setheading(0)
+        t.forward(14.142)
+        t.backward(14.142)
+        t.setheading(90)
+        t.forward(14.142)  # ends paper fold
+        t.setheading(180)
+        t.forward(110.858)
+        t.setheading(270)
+        t.forward(194.142)
+        t.end_fill()  # ends paper
+        t.backward(180)
+        t.penup()
+        t.setheading(0)
+        t.forward(10)  # moved to writing location
+        t.pendown()
+        for i in range(3):  # draws 6 lines total
+            for j in range(5):  # draws 5 squiggles per line from the left
+                t.pendown()
+                t.setheading(300)
+                t.forward(20)
+                t.setheading(60)
+                t.forward(20)
+                t.setheading(300)  # ends squiggles
+            t.penup()
+            t.setheading(270)
+            t.forward(30)  # moved down to next squiggle
 
-        drawer.pendown()
-        drawer.pencolor("black")
-        drawer.fillcolor("white")
-        drawer.begin_fill()
-        drawer.forward(125)
-        drawer.setheading(90)
-        drawer.forward(180)
-        drawer.setheading(135)
-        drawer.forward(20)
-        drawer.setheading(270)
-        drawer.forward(14.142)
-        drawer.setheading(0)
-        drawer.forward(14.142)
-        drawer.backward(14.142)
-        drawer.setheading(90)
-        drawer.forward(14.142)
-        drawer.setheading(180)
-        drawer.forward(110.858)
-        drawer.setheading(270)
-        drawer.forward(194.142)
-        drawer.end_fill()
-        drawer.backward(180)
-        drawer.penup()
-        drawer.setheading(0)
-        drawer.forward(10)
-        drawer.pendown()
-        for i in range(5):
-            drawer.setheading(300)
-            drawer.forward(20)
-            drawer.setheading(60)
-            drawer.forward(20)
-            drawer.setheading(300)
-        drawer.penup()
-        drawer.setheading(270)
-        drawer.forward(30)
-        for i in range(5):
-            drawer.pendown()
-            drawer.setheading(240)
-            drawer.forward(20)
-            drawer.setheading(120)
-            drawer.forward(20)
-            drawer.setheading(240)
-        drawer.penup()
-        drawer.setheading(270)
-        drawer.forward(30)
-        for i in range(5):
-            drawer.pendown()
-            drawer.setheading(300)
-            drawer.forward(20)
-            drawer.setheading(60)
-            drawer.forward(20)
-            drawer.setheading(300)
-        drawer.penup()
-        drawer.setheading(270)
-        drawer.forward(30)
-        for i in range(5):
-            drawer.pendown()
-            drawer.setheading(240)
-            drawer.forward(20)
-            drawer.setheading(120)
-            drawer.forward(20)
-            drawer.setheading(240)
-        drawer.penup()
-        drawer.setheading(270)
-        drawer.forward(30)
-        for i in range(5):
-            drawer.pendown()
-            drawer.setheading(300)
-            drawer.forward(20)
-            drawer.setheading(60)
-            drawer.forward(20)
-            drawer.setheading(300)
-        drawer.penup()
-        drawer.setheading(270)
-        drawer.forward(30)
-        for i in range(5):
-            drawer.pendown()
-            drawer.setheading(240)
-            drawer.forward(20)
-            drawer.setheading(120)
-            drawer.forward(20)
-            drawer.setheading(240)
+            for j in range(5):  # draws 5 squiggles per line from the right
+                t.pendown()
+                t.setheading(240)
+                t.forward(20)
+                t.setheading(120)
+                t.forward(20)
+                t.setheading(240)  # ends squiggles
+            t.penup()
+            t.setheading(270)
+            t.forward(30)  # moved down to next squiggle
+        t.hideturtle()
 
 
-    elif choice == 'scissors':
-        drawer.pensize(1)
-        drawer.pencolor("#a9a9a9")
-        drawer.fillcolor("#d3d3d3")
-        drawer.begin_fill()
-        drawer.setheading(45)
-        drawer.forward(250)
-        drawer.setheading(180)
-        drawer.forward(15)
-        drawer.setheading(220)
-        drawer.forward(230)
-        drawer.setheading(290)
-        drawer.forward(35)
-        drawer.end_fill()
-        drawer.penup()
-        drawer.setheading(45)
-        drawer.forward(120)
-        for i in range(8):
-            drawer.pendown()
-            drawer.pencolor("black")
-            drawer.setheading(340)
-            drawer.forward(18)
-            drawer.setheading(110)
-            drawer.forward(18)
-        drawer.setheading(225)
-        drawer.penup()
-        drawer.forward(240)
-
-        drawer.penup()
-        drawer.setheading(180)
-        drawer.forward(10)
-        drawer.setheading(90)
-        drawer.forward(145)
-
-        drawer.pendown()
-        drawer.pencolor("#a9a9a9")
-        drawer.fillcolor("#d3d3d3")
-        drawer.begin_fill()
-        drawer.setheading(315)
-        drawer.forward(250)
-        drawer.setheading(270)
-        drawer.forward(15)
-        drawer.setheading(140)
-        drawer.forward(230)
-        drawer.setheading(90)
-        drawer.forward(35)
-        drawer.end_fill()
-
-        drawer.backward(5)
-        drawer.penup()
-        drawer.setheading(320)
-        drawer.forward(110)
-        for i in range(8):
-            drawer.pendown()
-            drawer.pencolor("black")
-            drawer.setheading(20)
-            drawer.forward(18)
-            drawer.setheading(250)
-            drawer.forward(18)
-        drawer.setheading(225)
-        drawer.penup()
-
-        drawer.setheading(153)
-        drawer.forward(225)
-        drawer.setheading(0)
-
-        drawer.pencolor("black")
-        drawer.fillcolor("#4169e1")
-        drawer.pendown()
-        drawer.begin_fill()
-        drawer.circle(50)
-        drawer.end_fill()
-        drawer.setheading(90)
-        drawer.penup()
-        drawer.forward(15)
-        drawer.setheading(0)
-        drawer.pendown()
-        drawer.pencolor("black")
-        drawer.fillcolor("white")
-        drawer.begin_fill()
-        drawer.circle(35)
-        drawer.end_fill()
-
-        drawer.penup()
-        drawer.setheading(270)
-        drawer.forward(130)
-        drawer.setheading(0)
-
-        drawer.pendown()
-        drawer.pencolor("black")
-        drawer.fillcolor("#4169e1")
-        drawer.begin_fill()
-        drawer.circle(50)
-        drawer.end_fill()
-        drawer.setheading(90)
-        drawer.penup()
-        drawer.forward(15)
-        drawer.setheading(0)
-        drawer.pendown()
-        drawer.pencolor("black")
-        drawer.fillcolor("white")
-        drawer.begin_fill()
-        drawer.circle(35)
-        drawer.end_fill()
-
-        drawer.penup()
-        drawer.setheading(0)
-        drawer.forward(93)
-        drawer.setheading(90)
-        drawer.forward(97)
-
-        drawer.pendown()
-        drawer.pencolor("#a9a9a9")
-        drawer.fillcolor("#5a5a5a")
-        drawer.begin_fill()
-        drawer.circle(7)
-        drawer.end_fill()
-        drawer.hideturtle()
-
-# Function to get a fact from OpenAI
-def get_fact():
+# function to get fact from OpenAI
+def get_fact(): # asks for a fact about rock-paper-scissors
     messages = [
         {"role": "system", "content": "Provide a fact about rock-paper-scissors."},
         {"role": "user", "content": "Give a fact!"}
     ]
     
     response = client.chat.completions.create(
-        model="gpt-4o", 
+        model="gpt-4o", # defines model
         messages=messages
     )
     
-    fact = response.choices[0].message.content
+    fact = response.choices[0].message.content # provides fact
     return fact.strip()
 
-# Function to display fact
+# function to display fact
 def display_fact(drawer, fact):
     drawer.penup()
     drawer.goto(-100, -180)
@@ -497,84 +523,58 @@ def display_fact(drawer, fact):
     drawer.pencolor("black")
     drawer.hideturtle()
 
-    # Display the fact text with wrapping
-    max_line_length = 40
-    words = fact.split()
-    lines = []
-    current_line = ""
-
-    for word in words:
-        if len(current_line) + len(word) + 1 > max_line_length:
-            lines.append(current_line)
-            current_line = word
-        else:
-            if current_line:
-                current_line += " "
-            current_line += word
-    
-    if current_line:
-        lines.append(current_line)
-    
-    y_offset = -150
-    drawer.penup()
-    for line in lines:
-        drawer.goto(-100, y_offset)
-        drawer.pendown()
-        drawer.write(line, align="left", font=("Arial", 16, "normal"))
-        y_offset -= 25
-        drawer.penup()
-
-# Ask user
-def get_user_choice():
+# ask user
+def get_user_choice(t):
     choice = turtle.textinput("Rock Paper and Scissors", "Rock, Paper, Scissors... Shoot! ").lower()
-    while choice not in ['rock', 'paper', 'scissors']:
+    while choice not in ['rock', 'paper', 'scissors']: # if other option is written
         print("Stop trying to impress me. Choose rock, paper, or scissors!!!")
-        choice = input("Rock, Paper, Scissors... Shoot! ").lower()
-    return choice
+        choice = turtle.textinput("Rock Paper and Scissors", "Rock, Paper, Scissors... Shoot! ").lower()
+    return choice # stores choice from user
 
-# Ask computer
+# ask computer
 def get_computer_choice():
-    return random.choice(['rock', 'paper', 'scissors'])
+    return random.choice(['rock', 'paper', 'scissors']) # computer randomly chooses choice
 
-# Determine winner
+# determine winner
 def determine_winner(user_choice, computer_choice):
-    if user_choice == computer_choice:
-        return "It's a tie!!! Good game."
+    if user_choice == computer_choice: # when both put the same choice
+        return "It's a tie!!! Good game." # presents tie
 
     if (user_choice == 'rock' and computer_choice == 'scissors') or \
        (user_choice == 'scissors' and computer_choice == 'paper') or \
        (user_choice == 'paper' and computer_choice == 'rock'):
-        return "YOU WIN!!! WOOOHOOO!!!"
+        return "YOU WIN!!! WOOOHOOO!!!" # presents user win
 
-    return "Sorry... you lose... Good game!"
+    return "Sorry... you lose... Good game!" # otherwise user loses
 
-# Game logic
+# game logistics
 def play_game():
-    drawer = setup_turtle()
-    user_choice = get_user_choice()
-    computer_choice = get_computer_choice()
+    t = setup_turtle() # defines and sets up turtle
+    user_choice = get_user_choice(t) # obtain user choice
+    computer_choice = get_computer_choice() # obtain user choice
 
-    print(f"You chose: {user_choice}")
-    print(f"The computer chose: {computer_choice}")
+    print(f"You chose: {user_choice}") # print user choice in console
+    print(f"The computer chose: {computer_choice}") # print computer choice in console
 
-    drawer.clear()
+    t.clear() # delete drawings
 
-    draw_choice(drawer, user_choice, (-180, 100))
-    draw_choice(drawer, computer_choice, (120, 100))
+    draw_choice(t, user_choice, (-180, 100)) # draws user's choice at location provided
+    draw_choice(t, computer_choice, (120, 100)) # draws computer's choice at location provided
 
-    result = determine_winner(user_choice, computer_choice)
-    print(result)
+    result = determine_winner(user_choice, computer_choice) # provide win or losing
+    print(result) # print win of loss on console
 
-    drawer.penup()
-    drawer.pencolor("navy")
-    drawer.goto(-50, 10)
-    drawer.pendown()
-    drawer.write(result, align="center", font=("Arial", 24, "normal"))
+    t.penup()
+    t.pencolor("navy")
+    t.goto(-30, -50)
+    t.pendown()
+    t.write(result, align="center", font=("Arial", 50, "normal"))
 
     # Fetch and display the fact
-    fact = get_fact()
-    display_fact(drawer, fact)
+    fact = get_fact() # obtains fact
+    display_fact(t, fact) # writes fact
 
     turtle.done()
-# Run the game
+
+# run the game
 play_game()
